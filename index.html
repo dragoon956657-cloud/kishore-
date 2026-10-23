@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be Mine? 💖</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,"Noto Sans Tamil",sans-serif;background:linear-gradient(135deg,#ffb6c9,#ffdce7,#ffe8f0);color:#6b1838;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:18px}
+  .hearts span{position:fixed;bottom:-40px;font-size:22px;opacity:.6;animation:floatUp linear infinite;pointer-events:none}
+  @keyframes floatUp{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+  .card{position:relative;width:min(100%,440px);background:rgba(255,255,255,.9);border:2px solid #fff;border-radius:28px;padding:28px 22px;text-align:center;box-shadow:0 18px 50px #9f315333;z-index:1}
+  .emoji{font-size:66px;line-height:1.25;animation:bounce 1.8s infinite}
+  @keyframes bounce{50%{transform:translateY(-7px)}}
+  h1{font-size:clamp(27px,7vw,36px);margin:12px 0;color:#d6336c}
+  p{font-size:17px;line-height:1.7;margin:12px 0}
+  .name{width:100%;padding:12px 14px;border:2px solid #ffc1d3;border-radius:14px;font-size:16px;outline:none;margin:8px 0 14px;background:#fff8fb;color:#6b1838}
+  .buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  button{border:0;border-radius:999px;padding:13px 22px;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s,filter .15s}
+  button:active{transform:scale(.96)}
+  .yes{background:#e83e72;color:white;box-shadow:0 6px 15px #e83e7244}
+  .no{background:#ffe0e9;color:#a52851}
+  .secondary{background:#fff0f5;color:#a52851;margin-top:12px}
+  #result{display:none}
+  .tiny{font-size:13px;color:#a35c75;margin-top:20px}
+  .sparkle{font-size:27px}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main class="card">
+  <section id="intro">
+    <div class="emoji">🧸💗</div>
+    <h1>ஒரு சின்ன கேள்வி...</h1>
+    <p>உன்னிடம் ஒரு முக்கியமான விஷயம் சொல்லணும்.<br>முழுசா படிச்சிட்டு பதில் சொல்லு! 💌</p>
+    <input class="name" id="herName" type="text" placeholder="உன் செல்லப் பெயர் (விருப்பம்)" maxlength="35" aria-label="பெயர்">
+    <div class="buttons"><button class="yes" onclick="showProposal()">சொல்லு பார்க்கலாம் 💖</button></div>
+    <p class="tiny">Made with lots of love 💞</p>
+  </section>
+
+  <section id="proposal" style="display:none">
+    <div class="emoji">🥹🌹</div>
+    <h1 id="proposalTitle">நீ எனக்கு ரொம்ப ஸ்பெஷல்!</h1>
+    <p>உன்னோட பேசுற ஒவ்வொரு நிமிஷமும் எனக்கு சந்தோஷம். உன் சிரிப்பு என் நாளையே அழகாக்குது. ❤️</p>
+    <p><b>என்னோட வாழ்க்கையில் இன்னும் ஸ்பெஷலான ஒருத்தியா இருப்பியா?</b></p>
+    <p>Will you be mine? 💍</p>
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">ஆமாம் 💖</button>
+      <button class="no" id="noBtn" onclick="sayNo()">இல்லை 🙈</button>
+    </div>
+  </section>
+
+  <section id="result">
+    <div class="emoji" id="resultEmoji">🥰💞</div>
+    <h1 id="resultTitle">என் மனசு சந்தோஷத்தில் பறக்குது!</h1>
+    <p id="resultText">இனிமே நம்ம ஒவ்வொரு நாளையும் அன்போடு அழகாக்கலாம். 💗</p>
+    <div class="sparkle">✨ 💐 ✨</div>
+    <button class="secondary" onclick="restart()">மீண்டும் தொடங்கு ↻</button>
+  </section>
+</main>
+<script>
+  const hearts = document.getElementById('hearts');
+  const heartChars = ['💗','💕','💖','💘','🌸'];
+  for(let i=0;i<20;i++){
+    const s=document.createElement('span');
+    s.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
+    s.style.left=Math.random()*100+'%';
+    s.style.animationDuration=(7+Math.random()*9)+'s';
+    s.style.animationDelay=(-Math.random()*12)+'s';
+    s.style.fontSize=(16+Math.random()*20)+'px';
+    hearts.appendChild(s);
+  }
+  function showProposal(){
+    const name=document.getElementById('herName').value.trim();
+    document.getElementById('proposalTitle').textContent=name ? name+', நீ எனக்கு ரொம்ப ஸ்பெஷல்! 💗' : 'நீ எனக்கு ரொம்ப ஸ்பெஷல்!';
+    document.getElementById('intro').style.display='none';
+    document.getElementById('proposal').style.display='block';
+  }
+  function sayYes(){
+    document.getElementById('proposal').style.display='none';
+    document.getElementById('result').style.display='block';
+    document.getElementById('resultEmoji').textContent='🥰💞🎉';
+    document.getElementById('resultTitle').textContent='யேய்! ரொம்ப சந்தோஷம்! 💖';
+    document.getElementById('resultText').textContent='உன் பதில் என் நாளையே அழகாக்கிடுச்சு. நம்ம சந்தோஷமா, அன்போட நிறைய நினைவுகள் உருவாக்கலாம்! 🌹';
+    for(let i=0;i<18;i++) setTimeout(makeBurst,i*90);
+  }
+  function sayNo(){
+    const b=document.getElementById('noBtn');
+    b.textContent='ஒரு தடவை யோசிச்சுப் பாரு 🥺';
+    document.querySelector('#proposal p:nth-of-type(2)').textContent='உன் முடிவு எதுவாக இருந்தாலும் மதிப்பேன். ஆனா என் மனசிலிருந்ததை சொல்லணும்னு தோணிச்சு. ❤️';
+  }
+  function makeBurst(){
+    const s=document.createElement('span');
+    s.textContent=['💖','💗','✨','💕'][Math.floor(Math.random()*4)];
+    s.style.position='fixed';s.style.left=Math.random()*100+'%';s.style.top=(20+Math.random()*60)+'%';
+    s.style.fontSize=(20+Math.random()*24)+'px';s.style.zIndex='5';s.style.pointerEvents='none';
+    document.body.appendChild(s);
+    s.animate([{transform:'scale(.4) translateY(0)',opacity:1},{transform:'scale(1.5) translateY(-100px)',opacity:0}],{duration:1300});
+    setTimeout(()=>s.remove(),1350);
+  }
+  function restart(){
+    document.getElementById('result').style.display='none';
+    document.getElementById('proposal').style.display='none';
+    document.getElementById('intro').style.display='block';
+    document.getElementById('noBtn').textContent='இல்லை 🙈';
+  }
+</script>
+</body>
+</html>
